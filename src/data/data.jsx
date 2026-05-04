@@ -43,7 +43,7 @@ const MONTHS = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov
 
 export const DATA_HEATMAP = [
   {
-    biome: "Boreal",
+    biome: "Bosque Boreal",
     Ene: 10.43, Feb: 8.07,  Mar: 7.25,  Abr: 2.00,  May: -17.71, Jun: -37.81,
     Jul: -32.73, Ago: -14.04, Sep: 3.54, Oct: 16.28, Nov: 15.49,  Dic: 12.45,
   },
@@ -53,7 +53,7 @@ export const DATA_HEATMAP = [
     Jul: -37.13, Ago: -17.91, Sep: 9.28, Oct: 9.79,  Nov: 7.34,  Dic: 5.92,
   },
   {
-    biome: "Temperate",
+    biome: "Templado",
     Ene: 16.25, Feb: 10.11, Mar: 0.91,  Abr: -8.62, May: -23.27, Jun: -51.40,
     Jul: -38.48, Ago: -48.45, Sep: -25.77, Oct: 3.62, Nov: 10.87, Dic: 14.31,
   },
@@ -97,12 +97,12 @@ export const DATA_GPP_RECO = [
 ].map(d => ({ ...d, balance: parseFloat((d.reco - d.gpp).toFixed(2)) }));
 
 export const DATA_BAWLD = [
-  { ecosystem: "Permafrost Bog", nee_median: -4.98, pct_source: 43.8, n: 532  },
-  { ecosystem: "Bog",            nee_median: -2.29, pct_source: 44.2, n: 1576 },
-  { ecosystem: "Dry Tundra",     nee_median:  0.91, pct_source: 57.1, n: 1591 },
-  { ecosystem: "Wet Tundra",     nee_median:  2.07, pct_source: 60.6, n: 1756 },
-  { ecosystem: "Moist Tundra",   nee_median:  3.00, pct_source: 59.0, n: 485  },
-  { ecosystem: "Fen",            nee_median:  3.23, pct_source: 63.1, n: 1348 },
+  { ecosystem: "Turbera Permafrost", nee_median: -4.98, pct_source: 43.8, n: 532  },
+  { ecosystem: "Turbera",            nee_median: -2.29, pct_source: 44.2, n: 1576 },
+  { ecosystem: "Tundra Seca",     nee_median:  0.91, pct_source: 57.1, n: 1591 },
+  { ecosystem: "Tundra Húmeda",     nee_median:  2.07, pct_source: 60.6, n: 1756 },
+  { ecosystem: "Tundra Mésica",   nee_median:  3.00, pct_source: 59.0, n: 485  },
+  { ecosystem: "Ciénaga",            nee_median:  3.23, pct_source: 63.1, n: 1348 },
   { ecosystem: "Boreal Forest",  nee_median:  5.93, pct_source: 60.7, n: 5055 },
 ];
 
@@ -202,14 +202,12 @@ function neeToColor(value) {
   const maxAbs = 55;
   const clamped = Math.max(-maxAbs, Math.min(maxAbs, value));
   if (clamped < 0) {
-    // negativo → verde (sumidero)
     const t = Math.abs(clamped) / maxAbs;
     const r = Math.round(31  + (10  - 31)  * t);
     const g = Math.round(107 + (160 - 107) * t);
     const b = Math.round(92  + (120 - 92)  * t);
     return `rgb(${r},${g},${b})`;
   } else {
-    // positivo → rojo (fuente)
     const t = clamped / maxAbs;
     const r = Math.round(31  + (201 - 31)  * t);
     const g = Math.round(107 + (75  - 107) * t);
@@ -219,7 +217,7 @@ function neeToColor(value) {
 }
 
 export function ChartHeatmap({ data = DATA_HEATMAP_LONG }) {
-  const biomes  = ["Boreal", "Tundra", "Temperate"];
+  const biomes  = ["Bosque Boreal", "Tundra", "Templado"];
   const months  = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
   const cellW   = 64, cellH = 48, paddingL = 88, paddingT = 32;
   const svgW    = paddingL + months.length * cellW + 20;
@@ -231,7 +229,6 @@ export function ChartHeatmap({ data = DATA_HEATMAP_LONG }) {
   return (
     <svg width="100%" viewBox={`0 0 ${svgW} ${svgH}`}
          style={{ fontFamily: "sans-serif" }}>
-      {/* Etiquetas eje X (meses) */}
       {months.map((m, i) => (
         <text key={m}
           x={paddingL + i * cellW + cellW / 2} y={paddingT - 8}
@@ -239,7 +236,6 @@ export function ChartHeatmap({ data = DATA_HEATMAP_LONG }) {
           {m}
         </text>
       ))}
-      {/* Etiquetas eje Y (biomas) */}
       {biomes.map((b, j) => (
         <text key={b}
           x={paddingL - 8} y={paddingT + j * cellH + cellH / 2 + 4}
@@ -247,7 +243,6 @@ export function ChartHeatmap({ data = DATA_HEATMAP_LONG }) {
           {b}
         </text>
       ))}
-      {/* Celdas */}
       {biomes.map((b, j) =>
         months.map((_, i) => {
           const val = lookup[`${b}-${i + 1}`];
@@ -311,7 +306,7 @@ export function ChartBAWLD({ data = DATA_BAWLD, height = 300 }) {
           type="number" tick={axisStyle}
           label={{ value: "NEE mediano (g C m⁻² mes⁻¹)", position: "insideBottom",
                    offset: -2, fill: PALETTE.text, fontSize: 11 }}
-          domain={["dataMin - 1", "dataMax + 1"]}
+          domain={[-7, 8]}
         />
         <YAxis type="category" dataKey="ecosystem" tick={{ ...axisStyle, fontSize: 11 }}
                width={96} />
