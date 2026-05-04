@@ -1,19 +1,6 @@
-// =============================================================================
-// arctic-charts-data.js
-// Datos y componentes Recharts para el dashboard "El Ártico que respira al revés"
-// Stack: Vite + React + Recharts + shadcn/ui + Tailwind
-//
-// USO: importa los componentes que necesites en tus páginas/secciones.
-// Los datos están hardcodeados desde el EDA en R (medianas, flag == "0").
-// Cuando tengas los CSV procesados, reemplaza DATA_* con fetch/import.
-// =============================================================================
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PALETA (mismos valores que el R — cámbiala aquí para sincronizar ambos)
-// ─────────────────────────────────────────────────────────────────────────────
 export const PALETTE = {
   source:    "#C94B2C",  // Emisión / fuente
-  sink:      "#1F6B5C",  // Absorción / sumidero
+  sink:      "#1F6B5C",  // Absorción / 
   boreal:    "#2A6496",  // Bosque boreal
   tundra:    "#5BA3A0",  // Tundra
   temperate: "#B07D3A",  // Templado
@@ -23,11 +10,6 @@ export const PALETTE = {
   bg:        "#0B1C26",
 };
 
-
-// ─────────────────────────────────────────────────────────────────────────────
-// DATOS — Sección 1: Balance fuente vs sumidero anual
-// Variables: nee, year | Fuente: abcflux_terrestrial_clean.csv (flag == "0")
-// ─────────────────────────────────────────────────────────────────────────────
 export const DATA_BALANCE = [
   { year: 2000, pct_source: 60.8, pct_sink: 39.2, nee_median: 4.078,  n: 125 },
   { year: 2001, pct_source: 66.9, pct_sink: 33.1, nee_median: 5.492,  n: 175 },
@@ -56,13 +38,9 @@ export const DATA_BALANCE = [
   { year: 2024, pct_source: 70.8, pct_sink: 29.2, nee_median: 2.344,  n:  48 },
 ];
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DATOS — Sección 2a: Heatmap estacional NEE por bioma × mes
-// Variables: nee, biome, month
-// ─────────────────────────────────────────────────────────────────────────────
+
 const MONTHS = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
-// Formato plano para Recharts (una fila por bioma, cols = meses)
 export const DATA_HEATMAP = [
   {
     biome: "Boreal",
@@ -81,7 +59,6 @@ export const DATA_HEATMAP = [
   },
 ];
 
-// Versión larga para heatmap custom con celdas
 export const DATA_HEATMAP_LONG = DATA_HEATMAP.flatMap(row =>
   MONTHS.map((mes, i) => ({
     biome: row.biome,
@@ -91,10 +68,6 @@ export const DATA_HEATMAP_LONG = DATA_HEATMAP.flatMap(row =>
   }))
 );
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DATOS — Sección 2b: GPP vs Reco anual
-// Variables: gpp, reco, year
-// ─────────────────────────────────────────────────────────────────────────────
 export const DATA_GPP_RECO = [
   { year: 2000, gpp: 20.40, reco: 34.21 },
   { year: 2001, gpp: 19.09, reco: 27.02 },
@@ -123,10 +96,6 @@ export const DATA_GPP_RECO = [
   { year: 2024, gpp:  1.08, reco: 19.28 },
 ].map(d => ({ ...d, balance: parseFloat((d.reco - d.gpp).toFixed(2)) }));
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DATOS — Sección 3: NEE por ecosistema BAWLD
-// Variables: bawld_class, nee | Solo ecosistemas con ≥30 obs, flag == "0"
-// ─────────────────────────────────────────────────────────────────────────────
 export const DATA_BAWLD = [
   { ecosystem: "Permafrost Bog", nee_median: -4.98, pct_source: 43.8, n: 532  },
   { ecosystem: "Bog",            nee_median: -2.29, pct_source: 44.2, n: 1576 },
@@ -137,11 +106,6 @@ export const DATA_BAWLD = [
   { ecosystem: "Boreal Forest",  nee_median:  5.93, pct_source: 60.7, n: 5055 },
 ];
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DATOS — Sección 4: CO₂ acuático anual por tipo de cuerpo de agua
-// Variables: co2_flux, year, waterbody_type
-// ─────────────────────────────────────────────────────────────────────────────
-// Versión pivotada: una fila por año, cols = Lentic / Lotic
 export const DATA_AQUATIC = [
   { year: 1986, Lentic: 11.78 },
   { year: 1988, Lentic:  1.99,  Lotic:  0.69 },
@@ -175,21 +139,12 @@ export const DATA_AQUATIC = [
   { year: 2024, Lentic:  0.93,  Lotic:  22.46 },
 ];
 
-
-// =============================================================================
-// COMPONENTES RECHARTS
-// Importa lo que necesites en tu JSX:
-//   import { ChartBalance, ChartHeatmap, ChartGPPReco,
-//            ChartBAWLD, ChartAquatic } from "./arctic-charts-data"
-// =============================================================================
-
 import {
   AreaChart, Area, LineChart, Line, BarChart, Bar,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ReferenceLine, ResponsiveContainer, Cell, LabelList,
 } from "recharts";
 
-// ── Tooltip común ──────────────────────────────────────────────────────────
 const TooltipArctic = ({ active, payload, label, unit = "" }) => {
   if (!active || !payload?.length) return null;
   return (
@@ -204,16 +159,11 @@ const TooltipArctic = ({ active, payload, label, unit = "" }) => {
         </p>
       ))}
     </div>
-  );
-};
+  )
+}
 
-// ── Estilos de ejes compartidos ─────────────────────────────────────────────
 const axisStyle = { fill: PALETTE.text, fontSize: 11 };
 
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SECCIÓN 1 — Área apilada: % fuente vs sumidero
-// ─────────────────────────────────────────────────────────────────────────────
 export function ChartBalance({ data = DATA_BALANCE, height = 340 }) {
   return (
     <ResponsiveContainer width="100%" height={height}>
@@ -247,10 +197,6 @@ export function ChartBalance({ data = DATA_BALANCE, height = 340 }) {
   );
 }
 
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SECCIÓN 2a — Heatmap estacional (SVG custom, Recharts no tiene heatmap nativo)
-// ─────────────────────────────────────────────────────────────────────────────
 function neeToColor(value) {
   if (value === null || value === undefined) return "#1A3045";
   const maxAbs = 55;
@@ -328,10 +274,6 @@ export function ChartHeatmap({ data = DATA_HEATMAP_LONG }) {
   );
 }
 
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SECCIÓN 2b — GPP vs Reco (líneas + área de diferencia)
-// ─────────────────────────────────────────────────────────────────────────────
 export function ChartGPPReco({ data = DATA_GPP_RECO, height = 320 }) {
   return (
     <ResponsiveContainer width="100%" height={height}>
@@ -357,15 +299,11 @@ export function ChartGPPReco({ data = DATA_GPP_RECO, height = 320 }) {
   );
 }
 
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SECCIÓN 3 — Barras horizontales: NEE por ecosistema BAWLD
-// ─────────────────────────────────────────────────────────────────────────────
 export function ChartBAWLD({ data = DATA_BAWLD, height = 300 }) {
   return (
     <ResponsiveContainer width="100%" height={height}>
       <BarChart
-        data={[...data].reverse()}   // más legible: positivos arriba
+        data={[...data].reverse()}
         layout="vertical"
         margin={{ top: 5, right: 60, left: 100, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" stroke={PALETTE.grid} horizontal={false} />
@@ -398,10 +336,6 @@ export function ChartBAWLD({ data = DATA_BAWLD, height = 300 }) {
   );
 }
 
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SECCIÓN 4 — CO₂ acuático: líneas Lentic vs Lotic
-// ─────────────────────────────────────────────────────────────────────────────
 export function ChartAquatic({ data = DATA_AQUATIC, height = 300 }) {
   return (
     <ResponsiveContainer width="100%" height={height}>
@@ -429,44 +363,3 @@ export function ChartAquatic({ data = DATA_AQUATIC, height = 300 }) {
     </ResponsiveContainer>
   );
 }
-
-
-// =============================================================================
-// EJEMPLO DE USO EN UNA SECCIÓN DEL DASHBOARD
-// =============================================================================
-//
-// import { ChartBalance, ChartHeatmap, ChartGPPReco, ChartBAWLD, ChartAquatic }
-//   from "@/data/arctic-charts-data";
-//
-// export function Section1() {
-//   return (
-//     <section className="py-16 px-6">
-//       <h2 className="text-2xl font-bold text-white mb-2">
-//         El gran giro: de sumidero a fuente
-//       </h2>
-//       <p className="text-slate-400 mb-6 text-sm">
-//         En 2024, el 70.8% de las mediciones mensuales registraron emisión neta.
-//       </p>
-//       <ChartBalance height={360} />
-//     </section>
-//   );
-// }
-//
-// export function Section2() {
-//   return (
-//     <section className="py-16 px-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
-//       <div>
-//         <h3 className="text-lg font-semibold text-white mb-4">
-//           Patrón estacional del NEE
-//         </h3>
-//         <ChartHeatmap />
-//       </div>
-//       <div>
-//         <h3 className="text-lg font-semibold text-white mb-4">
-//           GPP vs Respiración del ecosistema
-//         </h3>
-//         <ChartGPPReco />
-//       </div>
-//     </section>
-//   );
-// }
