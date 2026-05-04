@@ -1,13 +1,9 @@
 import { ChartBalance, ChartHeatmap, ChartGPPReco, ChartBAWLD, ChartAquatic, PALETTE } 
   from "../data/data.jsx";
 
-
-
 export default function App() {
   return (
     <div style={{ background: PALETTE.bg, minHeight: "100vh", color: PALETTE.text, fontFamily: "sans-serif" }}>
-      
-      {/* HEADER */}
       <header style={{ padding: "48px 32px 24px", maxWidth: 1100, margin: "0 auto" }}>
         <p style={{ color: PALETTE.accent, fontSize: 13, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>
           NASA · ABCFlux v2 · 1984–2024
@@ -22,8 +18,6 @@ export default function App() {
       </header>
 
       <main style={{ maxWidth: 1100, margin: "0 auto", padding: "0 32px 64px" }}>
-
-        {/* SECCIÓN 1 */}
         <section style={{ marginBottom: 64 }}>
           <h2 style={{ fontSize: "1.4rem", fontWeight: 700, marginBottom: 4 }}>
             El gran giro: de sumidero a fuente
@@ -34,7 +28,6 @@ export default function App() {
           <ChartBalance height={360} />
         </section>
 
-        {/* SECCIÓN 2 */}
         <section style={{ marginBottom: 64 }}>
           <h2 style={{ fontSize: "1.4rem", fontWeight: 700, marginBottom: 24 }}>
             ¿Cuándo absorbe y cuándo emite?
@@ -55,7 +48,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* SECCIÓN 3 */}
         <section style={{ marginBottom: 64 }}>
           <h2 style={{ fontSize: "1.4rem", fontWeight: 700, marginBottom: 4 }}>
             ¿Qué ecosistemas emiten más?
@@ -66,7 +58,6 @@ export default function App() {
           <ChartBAWLD height={320} />
         </section>
 
-        {/* SECCIÓN 4 */}
         <section style={{ marginBottom: 64 }}>
           <h2 style={{ fontSize: "1.4rem", fontWeight: 700, marginBottom: 4 }}>
             Ecosistemas acuáticos: ríos y lagos también emiten
@@ -79,11 +70,9 @@ export default function App() {
 
       </main>
 
-      {/* FOOTER */}
       <footer style={{ borderTop: `1px solid ${PALETTE.grid}`, padding: "24px 32px", textAlign: "center", color: "#475569", fontSize: 12 }}>
         Datos: ABCFlux v2 · NASA ABoVE · ORNL DAAC · DOI: 10.3334/ORNLDAAC/2448
       </footer>
-
     </div>
   )
 }
