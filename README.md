@@ -73,6 +73,7 @@ Todas las gráficas de resumen utilizan únicamente registros con `expert_flag_c
 ---
 
 ## Procesamiento de datos
+Los datos correspondientes a 2024 son parciales (enero-marzo), por lo que las caídas visuales en las gráficas de líneas no reflejan una tendencia real de fin de año, sino la disponibilidad actual del dataset.
 
 Los datos originales en formato CSV fueron procesados con Python antes de integrarse al dashboard:
 
