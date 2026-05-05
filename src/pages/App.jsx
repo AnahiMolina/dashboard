@@ -24,7 +24,7 @@ export default function App() {
         <section style={{ marginBottom: 64 }}>
           <SectionHeader titulo="El gran giro: de sumidero a fuente" />
           <div style={{ display: "flex", gap: 16, marginBottom: 32, flexWrap: "wrap" }}>
-            {KPIs.map(k => <KPICard key={k.valor} {...k} />)}
+            {KPIs.map((k, i) => (<KPICard key={k.valor} {...k} delay={i * 150} />))}
           </div>
           <p style={{ color: "#94a3b8", fontSize: 13, marginBottom: 24 }}>
             En 2024, el 70.8% de las mediciones mensuales registraron emisión neta de CO₂.
@@ -46,7 +46,7 @@ export default function App() {
           <div>
             <SectionHeader
               titulo="Fotosíntesis vs Respiración del ecosistema (anual)"
-              nota="* El valor de 2024 corresponde a datos parciales (enero–marzo). La caída no refleja una tendencia real."
+              nota="* Cuando la respiración (rojo) supera la fotosíntesis (verde), el ecosistema emite más CO₂ del que absorbe."
             />
             <ChartGPPReco height={300} />
           </div>
