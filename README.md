@@ -1,19 +1,11 @@
 # El Ártico que respira al revés
 ### Dashboard · ABCFlux v2 · NASA ABoVE
 
-> *"En 2024, el 70.8% de las mediciones mensuales en la región ártico-boreal registraron emisión neta de CO₂. El Ártico está dejando de ser un sumidero de carbono."*
-
 ---
-
-## Descripción
 
 Dashboard de visualización científica construido con **React + Vite + Recharts**, desplegado en GitHub Pages. Explora 40 años de mediciones de flujos de CO₂ y CH₄ en ecosistemas terrestres y acuáticos de la región ártico-boreal, basado en el dataset **ABCFlux v2** de NASA.
 
 El objetivo es comunicar uno de los hallazgos más críticos del cambio climático ártico: la región está transitando de ser un sumidero neto de carbono a convertirse en una fuente, impulsado por el deshielo del permafrost y el incremento de la respiración ecosistémica.
-
----
-
-## Contexto científico
 
 Este dashboard fue desarrollado como parte de un Datathon (categoría Dashboard), con el objetivo de comunicar datos científicos de la NASA de forma accesible. La narrativa central está respaldada por los reportes técnicos anuales del programa de Ciencias Atmosféricas de la NASA (2017, 2019), que identifican las mediciones de perfil vertical de gases traza y la monitorización de CO₂ ártico como áreas de muy alta prioridad según el Decadal Survey 2017.
 
@@ -108,7 +100,7 @@ Leffler, A. J., Serrone, A., Bolek, A., Rocha, A. V., Korrensalo, A., Vähä, A.
 ## Instalación local
 
 ```bash
-git clone https://github.com/tu-usuario/dashboard.git
+git clone https://github.com/AnahiMolina/dashboard.git
 cd dashboard
 
 npm install
